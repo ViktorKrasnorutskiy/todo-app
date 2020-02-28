@@ -26,6 +26,8 @@ const TodoFilter = ({hook, filter}) => {
         case 'undone':
           hook(e.target.value)
           break;
+        default:
+          break;
       }
   }
 

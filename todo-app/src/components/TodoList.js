@@ -14,6 +14,8 @@ const TodoList = ({todos, hooks, filter}) => {
       case 'undone':
         return !todo.done
         break;
+      default:
+        break;
     }
   })
 
