@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import TodoCreate from './components/TodoCreate.js';
 import TodoFilter from './components/TodoFilter.js';
@@ -15,11 +15,33 @@ const App = () => {
     transform: 'translate(-50%, -50%)'
   }
 
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState('all')
+
+  const addTodo = (todoForAdd) => {
+    setTodos([...todos, todoForAdd])
+  }
+  const deleteTodo = (todoForDel) => {
+    setTodos(todos.filter((todo) =>
+      todo !== todoForDel
+    ))
+  }
+  const toggleTodo = (todoForToggle) => {
+    setTodos(todos.map((todo) =>
+      todo === todoForToggle ? {
+        id: todoForToggle.id,
+        text: todoForToggle.text,
+        done: !todoForToggle.done
+      } : todo
+    ))
+  }
+
+
   return (
     <div className="App" style={style}>
-      <TodoCreate />
-      <TodoFilter />
-      <TodoList />
+      <TodoCreate hook={addTodo} todos={todos}/>
+      <TodoFilter hook={setFilter} filter={filter}/>
+      <TodoList hooks={{deleteTodo,toggleTodo}} todos={todos} filter={filter}/>
     </div>
   )
 };
